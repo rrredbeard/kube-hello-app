@@ -1,0 +1,44 @@
+
+debug: false
+
+logging:
+  level:
+    root: warn
+    io.rrredbeard: debug
+    org.eclipse.jetty.server: info
+
+spring:
+  application:
+    name: kube-hello-app
+  main:
+    banner-mode: off
+  jackson:
+    deserialization:
+      fail-on-ignored-properties: false
+
+hello-app:
+  id: ${HOSTNAME:${spring.application.name}-${random.long(100000,999999)}}
+  version: '@project.version@'
+
+server:
+  port: 8081
+  jetty:
+    acceptors: 1 # Number of acceptor threads to use.
+    max-http-post-size: 0 # Maximum size in bytes of the HTTP post or put content.
+    selectors: 1 # Number of selector threads to use.
+
+management:
+  endpoints:
+    enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true
+      probes:
+        enabled: true
+  health:
+    probes:
+      enabled: true
+    livenessState:
+      enabled: ${management.health.probes.enabled}
+    readinessState:
+      enabled: ${management.health.probes.enabled}
