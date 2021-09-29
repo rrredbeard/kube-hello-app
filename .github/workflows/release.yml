@@ -38,3 +38,14 @@ jobs:
         run: mvn -B release:prepare -DskipTests=true
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_TOKEN }}
+      
+      - name: Get image version
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        
+      - name: Check version
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
