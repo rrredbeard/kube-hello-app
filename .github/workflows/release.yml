@@ -37,4 +37,4 @@ jobs:
       - name: Publish JAR
         run: mvn -B release:prepare -DskipTests=true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_TOKEN }}
