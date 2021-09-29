@@ -1,9 +1,11 @@
-name: DockerHub publish
+name: Publish on DockerHub
 
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - '*'
+  release:
+    types: [published]
     
 jobs:
   build:
