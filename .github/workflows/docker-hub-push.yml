@@ -1,14 +1,12 @@
+
 name: Publish on DockerHub
 
 on:
-  push:
-    tags:
-      - '*'
-  release:
-    types: [published]
+  create:
     
 jobs:
   build:
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project
@@ -34,7 +32,6 @@ jobs:
   publish_docker_images:
     needs: build
     runs-on: ubuntu-latest
-    if: GitHub.ref == 'refs/heads/main' || GitHub.event_name == 'release'
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
