@@ -26,6 +26,11 @@ jobs:
           distribution: 'adopt'
           server-id: github
 
+      - name: Configure Git user
+        run: |
+          git config user.email "alessandro.venditti1995@gmail.com"
+          git config user.name "Alessandro Venditti"
+
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
