@@ -2,7 +2,9 @@
 name: Publish on DockerHub
 
 on:
-  create:
+  release:
+    types:
+      - created
     
 jobs:
   build:
@@ -46,6 +48,7 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
+          echo ${{ github.event.release.tag_name }}
         
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -65,7 +68,7 @@ jobs:
           push: true
           cache-from: type=registry,ref=rrredbeard/kube-hello-app:latest
           cache-to: type=inline
-          tags: rrredbeard/kube-hello-app:latest, rrredbeard/kube-hello-app:${{ steps.vars.outputs.tag }}
+          tags: rrredbeard/kube-hello-app:latest, rrredbeard/kube-hello-app:${{ github.event.release.tag_name }}
           
         
    
