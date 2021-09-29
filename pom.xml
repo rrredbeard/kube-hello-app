@@ -4,10 +4,10 @@
 
     <groupId>io.rrredbeard</groupId>
     <artifactId>kube-hello-app</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <name>kube-hello-app</name>
-	<packaging>jar</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>8</java.version>
@@ -164,7 +164,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/${git.repository}.git</developerConnection>
-        <tag>v0.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <!-- - ->
