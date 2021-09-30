@@ -80,7 +80,7 @@ jobs:
           push: true
           cache-from: type=registry,ref=${{ env.IMAGE_NAME_EXT }}:latest
           cache-to: type=inline
-          tags: ${{ env.IMAGE_NAME_EXT }}:latest, ${{ env.IMAGE_NAME_EXT }}:${{ TAG }}
+          tags: ${{ env.DH_IMAGE_NAME }}:latest, ${{ env.DH_IMAGE_NAME }}:${{ env.TAG }}
           
         
    
