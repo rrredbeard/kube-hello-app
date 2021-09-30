@@ -19,7 +19,10 @@ public class AppInfo {
 	@JsonProperty()
 	private String version;
 
-	@JsonProperty(value = "extra_params")
-	private JsonNode extraParams;
+	@JsonProperty(value = "extra_param")
+	private String extraParam;
+
+	@JsonProperty(value = "__env")
+	private JsonNode environment;
 
 }

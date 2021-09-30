@@ -2,6 +2,7 @@ package io.rrredbeard.kube_hello_app;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.rrredbeard.kube_hello_app.config.CredentialsHolder;
 import io.rrredbeard.kube_hello_app.config.KubeHelloAppProperties;
 import io.rrredbeard.kube_hello_app.config.MongoCredentials;
 import io.rrredbeard.kube_hello_app.dto.AppInfo;
@@ -45,6 +46,7 @@ public class KubeHelloApplication {
   public static class Controller {
 
     private final KubeHelloAppProperties properties;
+    private final CredentialsHolder credentialsHolder;
     private final ObjectMapper objectMapper;
 
     @NonNull
@@ -58,15 +60,17 @@ public class KubeHelloApplication {
     @GetMapping("/{param}")
     public ResponseEntity<AppInfo> getInfo(@NonNull @PathVariable("param") String param) {
 
-      final ObjectNode params = objectMapper.createObjectNode();
-
-      params.put("path_variable", param);
+      final ObjectNode env =
+          objectMapper
+              .createObjectNode()
+              .set("credentials", objectMapper.valueToTree(credentialsHolder.getCredentialsMap()));
 
       return ResponseEntity.ok(
           AppInfo.builder()
               .appId(properties.getId())
               .version(properties.getVersion())
-              .extraParams(params)
+              .extraParam(param)
+              .environment(env)
               .build());
     }
   }
