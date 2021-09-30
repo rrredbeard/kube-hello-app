@@ -24,12 +24,4 @@ public class KubeHelloAppProperties implements PrintableBean {
 
   /* ***/
 
-  @ConstructorBinding
-  @Getter
-  @AllArgsConstructor
-  @ToString(onlyExplicitlyIncluded = true)
-  public static class LogOption {
-
-    @NotBlank @lombok.NonNull @ToString.Include private final Boolean showActuator;
-  }
 }

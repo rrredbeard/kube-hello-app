@@ -1,9 +1,9 @@
 package io.rrredbeard.kube_hello_app;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.rrredbeard.kube_hello_app.config.KubeHelloAppProperties;
+import io.rrredbeard.kube_hello_app.config.MongoCredentials;
 import io.rrredbeard.kube_hello_app.dto.AppInfo;
 import io.rrredbeard.kube_hello_app.utils.PrintableBean;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Slf4j
 @SpringBootApplication
 @EnableWebMvc
-@EnableConfigurationProperties({KubeHelloAppProperties.class})
+@EnableConfigurationProperties({KubeHelloAppProperties.class, MongoCredentials.class})
 public class KubeHelloApplication {
 
   public static void main(String[] args) {

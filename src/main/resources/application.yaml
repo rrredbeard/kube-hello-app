@@ -21,6 +21,10 @@ hello-app:
   version: '@project.version@'
   log:
     show-actuator: true
+  credentials:
+    mongo:
+      username: 'mongo'
+      password: '<secret-placeholder>'
 
 server:
   port: 8081

@@ -21,7 +21,7 @@ class MyCustomRequestLog extends ContainerLifeCycle implements RequestLog {
 
   @NonNull
   public static AbstractConfiguration asConfiguration(
-      @NonNull Writer writer, @NonNull KubeHelloAppProperties.LogOption logOption) {
+      @NonNull Writer writer, @NonNull LogOption logOption) {
     //
     return new AbstractConfiguration() {
 
@@ -38,9 +38,9 @@ class MyCustomRequestLog extends ContainerLifeCycle implements RequestLog {
 
   private final Writer writer;
   private final DateCache dateCache;
-  private final KubeHelloAppProperties.LogOption logOption;
+  private final LogOption logOption;
 
-  public MyCustomRequestLog(Writer writer, KubeHelloAppProperties.LogOption logOption) {
+  public MyCustomRequestLog(Writer writer, LogOption logOption) {
 
     this.writer = writer;
     this.logOption = logOption;
