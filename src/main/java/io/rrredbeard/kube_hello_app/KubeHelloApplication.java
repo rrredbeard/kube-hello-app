@@ -48,6 +48,13 @@ public class KubeHelloApplication {
     private final ObjectMapper objectMapper;
 
     @NonNull
+    @GetMapping
+    public ResponseEntity<AppInfo> getInfo() {
+
+      return getInfo("Hello!!!");
+    }
+
+    @NonNull
     @GetMapping("/{param}")
     public ResponseEntity<AppInfo> getInfo(@NonNull @PathVariable("param") String param) {
 
