@@ -16,14 +16,20 @@ import javax.validation.constraints.NotBlank;
 @ToString(onlyExplicitlyIncluded = true)
 public class KubeHelloAppProperties implements PrintableBean {
 
-	@NotBlank
-	@lombok.NonNull
-	@ToString.Include
-	private final String id;
+  @NotBlank @lombok.NonNull @ToString.Include private final String id;
 
-	@NotBlank
-	@lombok.NonNull
-	@ToString.Include
-	private final String version;
+  @NotBlank @lombok.NonNull @ToString.Include private final String version;
 
+  @NotBlank @lombok.NonNull private final LogOption log;
+
+  /* ***/
+
+  @ConstructorBinding
+  @Getter
+  @AllArgsConstructor
+  @ToString(onlyExplicitlyIncluded = true)
+  public static class LogOption {
+
+    @NotBlank @lombok.NonNull @ToString.Include private final Boolean showActuator;
+  }
 }

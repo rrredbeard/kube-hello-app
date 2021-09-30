@@ -9,7 +9,7 @@ logging:
 
 spring:
   application:
-    name: kube-hello-app
+    name: '@project.artifactId@'
   main:
     banner-mode: off
   jackson:
@@ -19,6 +19,8 @@ spring:
 hello-app:
   id: ${HOSTNAME:${spring.application.name}-${random.long(100000,999999)}}
   version: '@project.version@'
+  log:
+    show-actuator: true
 
 server:
   port: 8081

@@ -12,28 +12,14 @@ import org.springframework.lang.NonNull;
 @Configuration
 public class CustomJettyConfiguration {
 
-  private static void customize(@NonNull Server server) {
-    final WebAppContext context = (WebAppContext) server.getHandler();
-    final org.eclipse.jetty.webapp.Configuration[] configs = context.getConfigurations();
-
-    final org.eclipse.jetty.webapp.Configuration[] modifiedConfigs =
-        new org.eclipse.jetty.webapp.Configuration[configs.length + 1];
-
-    System.arraycopy(configs, 0, modifiedConfigs, 0, configs.length);
-
-    modifiedConfigs[configs.length] =
-        MyCustomRequestLog.asConfiguration(new Slf4jRequestLogWriter());
-
-    context.setConfigurations(modifiedConfigs);
-  }
-
-
-  /* ***/
-
   private final int port;
+  private final KubeHelloAppProperties properties;
 
-  public CustomJettyConfiguration(@NonNull @Value("${server.port}") Integer port) {
+  public CustomJettyConfiguration(
+      @NonNull @Value("${server.port}") Integer port, @NonNull KubeHelloAppProperties properties) {
+    //
     this.port = port;
+    this.properties = properties;
   }
 
   @Bean
@@ -41,7 +27,21 @@ public class CustomJettyConfiguration {
 
     final JettyServletWebServerFactory factory = new JettyServletWebServerFactory(port);
 
-    factory.addServerCustomizers(CustomJettyConfiguration::customize);
+    factory.addServerCustomizers(
+        (@NonNull Server server) -> {
+          final WebAppContext context = (WebAppContext) server.getHandler();
+          final org.eclipse.jetty.webapp.Configuration[] configs = context.getConfigurations();
+
+          final org.eclipse.jetty.webapp.Configuration[] modifiedConfigs =
+              new org.eclipse.jetty.webapp.Configuration[configs.length + 1];
+
+          System.arraycopy(configs, 0, modifiedConfigs, 0, configs.length);
+
+          modifiedConfigs[configs.length] =
+              MyCustomRequestLog.asConfiguration(new Slf4jRequestLogWriter(), properties.getLog());
+
+          context.setConfigurations(modifiedConfigs);
+        });
 
     return factory;
   }

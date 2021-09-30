@@ -20,12 +20,14 @@ import static java.lang.String.format;
 class MyCustomRequestLog extends ContainerLifeCycle implements RequestLog {
 
   @NonNull
-  public static AbstractConfiguration asConfiguration(@NonNull Writer writer) {
+  public static AbstractConfiguration asConfiguration(
+      @NonNull Writer writer, @NonNull KubeHelloAppProperties.LogOption logOption) {
+    //
     return new AbstractConfiguration() {
 
       @Override
       public void configure(@NonNull WebAppContext context) {
-        context.getServer().setRequestLog(new MyCustomRequestLog(writer));
+        context.getServer().setRequestLog(new MyCustomRequestLog(writer, logOption));
       }
     };
   }
@@ -36,10 +38,12 @@ class MyCustomRequestLog extends ContainerLifeCycle implements RequestLog {
 
   private final Writer writer;
   private final DateCache dateCache;
+  private final KubeHelloAppProperties.LogOption logOption;
 
-  public MyCustomRequestLog(Writer writer) {
+  public MyCustomRequestLog(Writer writer, KubeHelloAppProperties.LogOption logOption) {
 
     this.writer = writer;
+    this.logOption = logOption;
     this.dateCache =
         new DateCache("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault(), TimeZone.getDefault());
 
@@ -50,6 +54,10 @@ class MyCustomRequestLog extends ContainerLifeCycle implements RequestLog {
   public void log(Request request, Response response) {
 
     final String requestURI = request.getRequestURI();
+
+    if (!logOption.getShowActuator() && requestURI.startsWith("/actuator")) {
+      return;
+    }
 
     try {
       final StringBuilder sb = BUFFER_HOLDER.get();
