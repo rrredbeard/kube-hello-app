@@ -37,12 +37,14 @@ service:
   targetPort: 8081
 
 ingress:
-  enabled: false
+  enabled: true
   className: ""
   annotations: {}
-  hostSuffix: hello-app.info
-  path: /
-  pathType: Prefix
+  host:
+    hostSuffix: hello-app.info
+    paths:
+      - path: /
+        pathType: Prefix
   tls: []
 
 autoscaling:
