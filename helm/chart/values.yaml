@@ -29,6 +29,8 @@ serviceAccount:
   annotations: {}
   name: "hello-user"
 
+podAnnotations: {}
+
 service:
   type: NodePort
   port: 8080
@@ -52,13 +54,10 @@ autoscaling:
 
 nodeSelector: {}
 
-tolerations: []
-
-affinity: {}
-
 components:
   mongo:
     enabled: true
+    immutable: true
     secretName: 'mongo-credentials'
     username: 'admin'
     password: '4dm1n!'
