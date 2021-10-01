@@ -1,0 +1,64 @@
+
+replicaCount: 1
+
+image:
+  repository: docker.io/rrredbeard/kube-hello-app
+  pullPolicy: IfNotPresent
+  tag: "latest"
+  probes:
+    readiness:
+      initial: 30
+      period: 5
+    liveness:
+      initial: 15
+      period: 5
+  resources: 
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+imagePullSecrets: []
+nameOverride: "hello-app"
+# fullnameOverride: "kube-hello-app"
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "hello-user"
+
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 8081
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hostSuffix: hello-app.info
+  path: /
+  pathType: Prefix
+  tls: []
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 50
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+components:
+  mongo:
+    enabled: true
+    secretName: 'mongo-credentials'
+    username: 'admin'
+    password: '4dm1n!'
