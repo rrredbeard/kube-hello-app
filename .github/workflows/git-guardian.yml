@@ -1,6 +1,6 @@
 name: GitGuardian scan
 
-on: [push, pull_request]
+on: push
 
 jobs:
   scanning:
@@ -11,8 +11,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0 # fetch all history so multiple commits can be scanned
+          
       - name: GitGuardian scan
-        uses: GitGuardian/gg-shield-action@master
+        uses: GitGuardian/gg-shield-action@v1.1.0
+        with:
+          args: -v --all-policies
         env:
           GITHUB_PUSH_BEFORE_SHA: ${{ github.event.before }}
           GITHUB_PUSH_BASE_SHA: ${{ github.event.base }}
