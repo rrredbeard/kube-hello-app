@@ -7,14 +7,19 @@ on:
     branches: 
       - main 
     paths:
-      - my-directory/**
-  
+      - helm/**
+
 jobs:
   checks:
     runs-on: ubuntu-18.04
     steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
       - name: kube-linter
         uses: stackrox/kube-linter-action@v1.0.3
         with:
+          # Config
+          config: helm/.kube-linter-config.yaml
           # Directory or file to scan
           directory: helm/chart
