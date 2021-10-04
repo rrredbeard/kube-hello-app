@@ -4,20 +4,20 @@ replicaCount: 1
 image:
   repository: docker.io/rrredbeard/kube-hello-app
   pullPolicy: IfNotPresent
-  tag: v0.1.14
+  tag: v0.2.0
   probes:
     readiness:
       initial: 30
       period: 5
     liveness:
-      initial: 15
-      period: 5
+      initial: 45
+      period: 10
   resources: 
     limits:
-      cpu: 200m
+      cpu: 300m
       memory: 256Mi
     requests:
-      cpu: 100m
+      cpu: 200m
       memory: 128Mi
 
 imagePullSecrets: []
