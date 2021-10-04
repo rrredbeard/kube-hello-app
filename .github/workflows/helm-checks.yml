@@ -1,0 +1,20 @@
+name: Helm syntax checks
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  push:
+    branches: 
+      - main 
+    paths:
+      - my-directory/**
+  
+jobs:
+  checks:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: kube-linter
+        uses: stackrox/kube-linter-action@v1.0.3
+        with:
+          # Directory or file to scan
+          directory: helm/chart
