@@ -61,5 +61,5 @@ components:
     enabled: true
     immutable: true
     secretName: 'mongo-credentials'
-    username: 'admin'
-    password: '4dm1n!'
+    username: ''
+    password: ''
