@@ -46,3 +46,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
     {{- default "default" .Values.serviceAccount.name }}
   {{- end }}
 {{- end }}
+
+{{- define "kube-hello-app.imageFullname" -}}
+  {{- $tag := (required "Image tag is required" .Values.image.tag) }}
+  {{- printf "%s:%s" .Values.image.repository $tag }}
+{{- end }}
+
+{{- define "kube-hello-app.mongoSecretFullname" -}}
+  {{- if .Values.components.mongo.enabled }}
+    {{- $secretName := (required "Mongo secretName cant be blank" .Values.components.mongo.secretName) }}
+    {{- printf "%s.%s" (include "kube-hello-app.fullname" .) $secretName }}
+  {{- else }}
+    {{- include "kube-hello-app.fullname" . }}
+  {{- end }}
+{{- end }}

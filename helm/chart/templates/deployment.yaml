@@ -25,16 +25,18 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "kube-hello-app.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ printf "%s:%s" .Values.image.repository (.Values.image.tag | default .Chart.AppVersion) }}
+          image: {{ include "kube-hello-app.imageFullname" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - configMapRef:
                 name: {{ include "kube-hello-app.fullname" . }}
             {{- if .Values.components.mongo.enabled }}
             - secretRef:
-                name: {{ printf "%s.%s" (include "kube-hello-app.fullname" .) .Values.components.mongo.secretName }}
+                name: {{ include "kube-hello-app.mongoSecretFullname" . }}
             {{- end }}
           ports:
             - name: http
@@ -54,6 +56,8 @@ spec:
             periodSeconds: {{ .Values.image.probes.readiness.period }}
           resources:
             {{- toYaml .Values.image.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
