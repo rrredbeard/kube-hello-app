@@ -4,7 +4,7 @@
 
     <groupId>io.rrredbeard</groupId>
     <artifactId>kube-hello-app</artifactId>
-    <version>0.1.16-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
 
     <name>kube-hello-app</name>
     <packaging>jar</packaging>

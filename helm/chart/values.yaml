@@ -1,0 +1,79 @@
+
+replicaCount: 1
+
+image:
+  repository: docker.io/rrredbeard/kube-hello-app
+  pullPolicy: IfNotPresent
+  tag: v0.2.0
+  probes:
+    readiness:
+      initial: 30
+      period: 5
+    liveness:
+      initial: 45
+      period: 10
+  resources: 
+    limits:
+      cpu: 300m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+
+imagePullSecrets: []
+nameOverride: hello-app
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "hello-user"
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext: 
+  # capabilities:
+  #   drop:
+  #   - ALL
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 8081
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  host:
+    hostSuffix: hello-app.info
+    paths:
+      - path: /
+        pathType: Prefix
+  tls: []
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 50
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+components:
+  mongo:
+    enabled: false
+    immutable: true
+    secretName: 'mongo-credentials'
+    username: ''
+    password: ''

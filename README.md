@@ -1,5 +1,5 @@
 
-# kube-hello-app  <a href="https://github.com/rrredbeard/kube-hello-app/releases"><img align="right" src="https://badgen.net/github/release/rrredbeard/kube-hello-app?icon=github&scale=1&label" /></a>
+# kube-hello-app  <a href="https://hub.docker.com/r/rrredbeard/kube-hello-app"><img align="right" src="https://badgen.net/docker/size/rrredbeard/kube-hello-app?icon=docker&scale=1&label=ImageSize" /></a>
 
 [![GitGuardian scan](https://github.com/rrredbeard/kube-hello-app/actions/workflows/git-guardian.yml/badge.svg)](https://github.com/rrredbeard/kube-hello-app/actions/workflows/git-guardian.yml)   
 [![Release with Maven](https://github.com/rrredbeard/kube-hello-app/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/rrredbeard/kube-hello-app/actions/workflows/release.yml)  
