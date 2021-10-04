@@ -4,7 +4,7 @@ replicaCount: 1
 image:
   repository: docker.io/rrredbeard/kube-hello-app
   pullPolicy: IfNotPresent
-  tag: v0.2.0
+  tag: v0.2.1
   probes:
     readiness:
       initial: 30
